@@ -1,0 +1,6 @@
+[runner]
+fastReruns = true
+[theme]
+base="dark"
+primaryColor="#DE834D"
+
