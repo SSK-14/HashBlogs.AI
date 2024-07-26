@@ -4,7 +4,7 @@ from src.modules.model import initialise_model, llm_generate, llm_stream, genera
 from src.modules.search import ai_search
 from src.modules.prompt import search_query_prompt, search_blog_prompt, banner_image_prompt
 from src.components.sidebar import side_info
-from src.components.ui import example_questions, regenerate_blog
+from src.components.ui import example_questions, regenerate_blog, upload_document
 from src.modules.search import initialise_tavily
 from src.modules.utils import parse_content
 
@@ -25,13 +25,21 @@ if "search_images" not in st.session_state:
 
 
 async def main():
-    st.title("#️⃣ HashBlogs.:blue[AI]")
+    st.title("#️⃣ AI.:blue[Playground]")
+    st.info("###### 👋 Welcome to HashBlogs.ai ✨ A playground to generate blog content using AI companion 🚀")
     side_info()
     initialise_model()
     initialise_tavily()
 
     if st.session_state.blog_content is None:
-        question_input = st.text_input(
+        if not st.session_state.search_context:
+            if st.button("📚 Add your notes"):
+                upload_document()
+        else:
+            if st.button("🗑️ Remove your notes"):
+                st.session_state.search_context = None
+
+        question_input = st.text_area(
             "Enter your idea 👇",
             placeholder="Type here... Eg: How to make perfect coffee?",
         )
@@ -40,26 +48,30 @@ async def main():
         example_questions()
 
     if st.session_state.question and st.session_state.blog_content is None:
-        with st.spinner("AI is working. Please wait."):
-            search_query = await llm_generate(search_query_prompt(st.session_state.question))
-            search_results = ai_search(search_query)
-        if search_results["results"]:
-            search_context = []
-            for result in search_results["results"]:
-                search_context.append({
-                    "title": result["title"],
-                    "content": result["content"],
-                    "url": result["url"],
-                })
-            st.session_state.search_context = search_context
-            st.session_state.search_images = search_results["images"]
+        if not st.session_state.search_context:
+            with st.spinner("AI is working. Please wait."):
+                search_query = await llm_generate(search_query_prompt(st.session_state.question))
+                search_results = ai_search(search_query)
+            if search_results["results"]:
+                search_context = []
+                for result in search_results["results"]:
+                    search_context.append({
+                        "title": result["title"],
+                        "content": result["content"],
+                        "url": result["url"],
+                    })
+                st.session_state.search_context = search_context
+                st.session_state.search_images = search_results["images"]
+                st.rerun()
+            else:
+                st.warning("No results found! 😔")
+        else:
             with st.container(height=710, border=True):
                 with st.container(height=620, border=False):
                     if st.session_state.blog_content is None:
-                        st.write_stream(llm_stream(search_blog_prompt(st.session_state.question, search_context, search_results["images"])))
+                        st.write_stream(llm_stream(search_blog_prompt(st.session_state.question, st.session_state.search_context, st.session_state.search_images)))
                         st.rerun()
-        else:
-            st.warning("No results found! 😔")
+        
 
     if st.session_state.blog_content_regenerate:
         with st.container(height=710, border=True):
@@ -96,5 +108,5 @@ async def main():
 
 
 if __name__ == "__main__":
-    st.set_page_config(page_title="HashBlogs.AI", page_icon="✨")
+    st.set_page_config(page_title="HashBlogs.ai", page_icon="✨")
     asyncio.run(main())

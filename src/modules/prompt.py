@@ -24,12 +24,21 @@ def banner_image_prompt(title, tldr):
 
 def search_blog_prompt(user_query, search_result, images, blog_content=None, feedback=None):
     current_date = time.strftime("%Y-%m-%d")
+    image_prompt = []
+    if images:
+        image_prompt = [
+                {"type": "image_url", "image_url": {"url": images[0]}},
+                {"type": "image_url", "image_url": {"url": images[1]}},
+                {"type": "image_url", "image_url": {"url": images[2]}},
+                {"type": "image_url", "image_url": {"url": images[3]}},
+            ]
+        
     prompt = (
         SystemMessage(
             content=f"Role: You are the best blogger in the world, todays date: {current_date}\n"
                     f"Task: Write a blog post based user question and search result\n"
                     f"Format: Write a blog post in markdown format including:\n"
-                    f"1.Title:, 2.Subtitle, 3.tl:dr 4.Introduction 6.Body with appropriate sections 7.conclusion, 8.reference\n"
+                    f"1.Title:, 2.Subtitle, 3.tl:dr 4.Introduction 6.Body with appropriate sections 7.conclusion, 8.reference [Only if available in search result]\n"
         ),
         HumanMessage(
              content=[
@@ -37,16 +46,12 @@ def search_blog_prompt(user_query, search_result, images, blog_content=None, fee
                     "type": "text", 
                     "text": f"User question: ```{user_query}``` .\n"
                             f"Search result: ```{json.dumps(search_result)}```\n\n"
-                            f"Images: {json.dumps(images)}\n\n"
+                            f"{'Images:'+json.dumps(images) if images else ''}\n\n"
                             f"Add only necessary images in the blog only if needed.\n"
                             f"Must be engaging, creative, include emojis.\n"
                             f"Blog in markdown: "
-                },
-                {"type": "image_url", "image_url": {"url": images[0]}},
-                {"type": "image_url", "image_url": {"url": images[1]}},
-                {"type": "image_url", "image_url": {"url": images[2]}},
-                {"type": "image_url", "image_url": {"url": images[3]}},
-            ],
+                } 
+            ] + image_prompt,
         )
     )
     if blog_content and feedback:

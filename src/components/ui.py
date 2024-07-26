@@ -1,4 +1,5 @@
 import streamlit as st
+import PyPDF2
 
 def display_search_result(search_results):
     if search_results["images"]:
@@ -28,6 +29,17 @@ def example_questions():
         st.session_state.question = questions[1]
         st.rerun()
 
+@st.experimental_dialog("Upload your documents")
+def upload_document():
+    uploaded_files = st.file_uploader("Upload PDF files", accept_multiple_files=True, type="pdf")
+    if uploaded_files:
+        text = []
+        for file in uploaded_files:
+            pdf_reader = PyPDF2.PdfReader(file)
+            for page in pdf_reader.pages:
+                text.append(page.extract_text())
+        st.session_state.search_context = text
+        st.rerun()
 
 @st.experimental_dialog("🔄 Re Generate Blog")
 def regenerate_blog():

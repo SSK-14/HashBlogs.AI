@@ -3,9 +3,10 @@ from src.modules.model import model_options
 
 def side_info():
     with st.sidebar:
+        st.logo("src/assets/ssk.png", icon_image="src/assets/logo.png", link="https://github.com/SSK-14")
         st.image("src/assets/logo.png")
         card_html = """
-        <div style="background-color: #00305d; border: 2px solid #60b4ff; border-radius: 10px; padding: 0px 8px; width: 100%; box-sizing: border-box; color: white;  font-family: 'Arial', sans-serif; font-size: 15px; color: #FAFAFA; line-height: 1.4;">
+        <div style="background-color: #002033; border: 2px solid #6a89a5; border-radius: 10px; padding: 0px 8px; width: 100%; box-sizing: border-box; color: white;  font-family: 'Arial', sans-serif; font-size: 15px; color: #FAFAFA; line-height: 1.4;">
             <p>HashBlogs.AI is your super-smart AI assistant for blogging! Just specify your preferences, and watch as it crawls live information 🌐, formats your content 📝, and adds engaging images 🖼️ like magic! ✨</p>
         </div>
         """
