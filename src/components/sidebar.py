@@ -3,6 +3,13 @@ from src.modules.model import model_options
 
 def side_info():
     with st.sidebar:
+        st.image("src/assets/logo.png")
+        card_html = """
+        <div style="background-color: #00305d; border: 2px solid #60b4ff; border-radius: 10px; padding: 0px 8px; width: 100%; box-sizing: border-box; color: white;  font-family: 'Arial', sans-serif; font-size: 15px; color: #FAFAFA; line-height: 1.3;">
+            <p>HashBlogs.AI is your super-smart AI assistant for blogging! Just specify your preferences, and watch as it crawls live information 🌐, formats your content 📝, and adds engaging images 🖼️ like magic! ✨</p>
+        </div>
+        """
+        st.components.v1.html(card_html, height=200, scrolling=False)
         if "OPENAI_API_TOKEN" not in st.secrets:
             st.text_input(
                 "Openai API Key",

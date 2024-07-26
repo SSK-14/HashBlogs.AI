@@ -22,7 +22,7 @@ def search_blog_prompt(user_query, search_result):
             content=f"Role: You are the best blogger in the world, todays date: {current_date}\n"
                     f"Task: Write a blog post based user question and search result\n"
                     f"Format: Write a blog post in markdown format including:\n"
-                    f"1.Title:, 2.Subtitle, 3.tl:dr 4.Sections with appropriate names 5.conclusion, 6.reference\n"
+                    f"1.Title:, 2.Subtitle, 3.tl:dr 4.Introduction 6.Body with appropriate sections 7.conclusion, 8.reference\n"
         ),
         HumanMessage(
             content=f"User question: ```{user_query}``` .\n"
