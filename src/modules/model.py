@@ -2,13 +2,9 @@ import streamlit as st
 from langchain_openai import ChatOpenAI
 from openai import OpenAI
 
-MODEL_PROVIDER = "openai"
-
 model_options = {
     "GPT-4o": "gpt-4o",
     "GPT-4o mini": "gpt-4o-mini",
-    "GPT-3.5 Turbo-16k": "gpt-3.5-turbo-16k",
-    "GPT-4 Turbo": "gpt-4-1106-preview",
     "GPT-4": "gpt-4",
 }
 
@@ -40,3 +36,12 @@ def llm_stream(prompt):
         st.session_state.blog_content += str(chunk.content)
         yield str(chunk.content)
 
+def generate_image(prompt, n):
+    response = st.session_state.openai_client.images.generate(
+                model='dall-e-3',
+                prompt=prompt,
+                size='1792x1024',
+                quality="standard",
+                n=n
+            )
+    return response.data[0].url
