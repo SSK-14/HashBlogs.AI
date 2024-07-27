@@ -1,5 +1,6 @@
 import re
 import streamlit as st
+import pyperclip
 
 def init_session_state():
     state_defaults = {
@@ -9,7 +10,8 @@ def init_session_state():
         "blog_content_regenerate": None,
         "question": None,
         "search_context": None,
-        "search_images": None
+        "search_images": None,
+        "blog_audio": None,
     }
     for key, value in state_defaults.items():
         if key not in st.session_state:
@@ -21,3 +23,7 @@ def parse_content(blog_content):
     tldr_match = re.search(r"### tl;dr\s+(.*?)\s+(?=##|$)", blog_content, re.DOTALL)
     tldr = tldr_match.group(1).strip() if tldr_match else None
     return title, tldr
+
+def copy_to_clipboard(text):
+    pyperclip.copy(text)
+    st.toast("Copied to clipboard", icon="📋")

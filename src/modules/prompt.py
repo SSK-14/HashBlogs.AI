@@ -15,6 +15,19 @@ def search_query_prompt(user_query):
         )
     )
 
+def audio_blog_prompt(blog_content):
+    return (
+        SystemMessage(
+            content=f"Role: Create a summarized script like one person narrating about a blog\n"
+                    f"Task: Given a blog content convert it to monologue script\n"
+                    f"Rule: Make it human like, simple, giving complete overview of the blog in less than 4000 characters only.\n"
+        ),
+        HumanMessage(
+            content=f"Blog Content: ```{blog_content}``` .\n"
+                    f"Audio Script: "
+        )
+    )
+
 def banner_image_prompt(title, tldr):
     prompt = f"You have to create a banner image for the blog post with title {title}. The image should be engaging, creative."
     f"Here is the short summary of the blog post: {tldr}"
@@ -22,7 +35,7 @@ def banner_image_prompt(title, tldr):
     f"Dont not include any text in the image."
     return prompt
 
-def search_blog_prompt(user_query, search_result, images, blog_content=None, feedback=None):
+def search_blog_prompt(user_query, blog_instructions, search_result, images, blog_content=None, feedback=None):
     current_date = time.strftime("%Y-%m-%d")
     image_prompt = []
     if images:
@@ -47,6 +60,7 @@ def search_blog_prompt(user_query, search_result, images, blog_content=None, fee
                     "text": f"User question: ```{user_query}``` .\n"
                             f"Search result: ```{json.dumps(search_result)}```\n\n"
                             f"{'Images:'+json.dumps(images) if images else ''}\n\n"
+                            f"{'User blog instructions:'+json.dumps(blog_instructions) if blog_instructions else ''}\n\n"
                             f"Add only necessary images in the blog only if needed.\n"
                             f"Must be engaging, creative, include emojis.\n"
                             f"Blog in markdown: "

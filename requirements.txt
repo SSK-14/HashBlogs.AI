@@ -3,5 +3,6 @@ tavily-python==0.3.5
 openai==1.37.0
 langchain-openai==0.1.8
 streamlit-mic-recorder
-qdrant-client
+streamlit-tags
 pypdf2
+pyperclip

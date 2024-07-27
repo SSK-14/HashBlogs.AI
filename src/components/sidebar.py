@@ -32,11 +32,12 @@ def side_info():
         st.sidebar.selectbox("Select a model", list(model_options.keys()), key="model_name")
         with st.popover("More settings", use_container_width=True):
             st.slider(
-                "Temperature", min_value=0.0, max_value=2.0, step=0.1, value=0.1, key="temperature"
+                "Creative Temperature", min_value=0.0, max_value=2.0, step=0.1, value=0.1, key="temperature"
             )
             st.slider(
                 "Max Tokens", min_value=0, max_value=8000, value=2500, key="max_tokens"
             )
 
         st.markdown("---")
+        st.image("src/assets/openai.png")
         st.link_button("🔗 Source Code", "https://github.com/SSK-14/HashBlogs.AI", use_container_width=True)

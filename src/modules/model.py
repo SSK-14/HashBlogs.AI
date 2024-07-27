@@ -3,8 +3,8 @@ from langchain_openai import ChatOpenAI
 from openai import OpenAI
 
 model_options = {
-    "GPT-4o": "gpt-4o",
     "GPT-4o mini": "gpt-4o-mini",
+    "GPT-4o": "gpt-4o",
     "GPT-4": "gpt-4",
 }
 
@@ -18,7 +18,7 @@ def initialise_model():
         st.warning('Please provide OpenAI API key in the sidebar.', icon="⚠️")
         st.stop()
     st.session_state.llm = ChatOpenAI(
-        model=model_options[st.session_state.model_name] or "gpt-4o",
+        model=model_options[st.session_state.model_name] or "gpt-4o-mini",
         temperature=st.session_state.temperature or 0.1,
         max_tokens=st.session_state.max_tokens or 2500,
         api_key=st.session_state.openai_api_token

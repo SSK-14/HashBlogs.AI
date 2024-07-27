@@ -16,9 +16,6 @@ def display_search_result(search_results):
             for result in search_results["results"]:
                 st.write(f"- [{result['title']}]({result['url']})")
 
-def header():
-    st.title("#️⃣ AI.:blue[Playground]")
-    st.info("###### 👋 Welcome to HashBlogs.ai ✨ A playground to generate blog content using AI companion 🚀")
 
 def example_questions():
     col1, col2 = st.columns(2)
@@ -26,10 +23,10 @@ def example_questions():
         "News on cricket T20 world cup 2024 final match",
         "Recent researches in the field of lung cancer"
     ]
-    if col1.button(questions[0]):
+    if col1.button(questions[0], use_container_width=True):
         st.session_state.question = questions[0]
         st.rerun()
-    if col2.button(questions[1]):
+    if col2.button(questions[1], use_container_width=True):
         st.session_state.question = questions[1]
         st.rerun()
 

@@ -3,6 +3,7 @@ etc/
 include/
 lib/
 share/
+audio/
 .vscode
 __pycache__/
 env
