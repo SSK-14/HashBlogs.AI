@@ -17,7 +17,7 @@ def side_info():
                 type="password",
                 placeholder="Paste your api key here",
                 help="You can get your API key from https://platform.openai.com/account/api-keys",
-                key="model_api_key"
+                key="openai_api_token"
             )
 
         if "TAVILY_API_KEY" not in st.secrets:
