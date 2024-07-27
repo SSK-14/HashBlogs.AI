@@ -1,4 +1,19 @@
 import re
+import streamlit as st
+
+def init_session_state():
+    state_defaults = {
+        "blog_content": None,
+        "blog_content_edit": False,
+        "blog_banner": None,
+        "blog_content_regenerate": None,
+        "question": None,
+        "search_context": None,
+        "search_images": None
+    }
+    for key, value in state_defaults.items():
+        if key not in st.session_state:
+            st.session_state[key] = value
 
 def parse_content(blog_content):
     title_match = re.search(r"^# (.+)$", blog_content, re.MULTILINE)

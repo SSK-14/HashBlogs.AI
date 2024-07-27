@@ -16,6 +16,10 @@ def display_search_result(search_results):
             for result in search_results["results"]:
                 st.write(f"- [{result['title']}]({result['url']})")
 
+def header():
+    st.title("#️⃣ AI.:blue[Playground]")
+    st.info("###### 👋 Welcome to HashBlogs.ai ✨ A playground to generate blog content using AI companion 🚀")
+
 def example_questions():
     col1, col2 = st.columns(2)
     questions = [
